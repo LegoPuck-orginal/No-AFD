@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AfD — Risiken & Problematiken</title>
+  <meta name="description" content="Kompakte, quellenbasierte Übersicht über Risiken und Problematiken der AfD — modern, schnell, mobilfreundlich." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0e0f12;                /* Dark base */
+      --panel: rgba(255,255,255,0.06);
+      --panel-strong: rgba(255,255,255,0.14);
+      --text: #eef2f5;
+      --muted: #c7ced6;
+      --accent: hsl(330 70% 78%);   /* Pastell-Pink */
+      --accent-strong: hsl(330 70% 68%);
+      --accent-very: hsl(330 75% 60%);
+      --ok: #7ee787;
+      --warn: #ffdf5d;
+      --bad: #ff7b86;
+      --link: #ffd1e8;
+      --ring: 0 0 0 6px rgba(255, 190, 220, 0.18);
+      --shadow: 0 10px 30px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.03) inset;
+      --radius: 18px;
+      --radius-lg: 26px;
+      --grid: 1100px;
+      --blur: 10px;
+      --grad-1: linear-gradient(135deg, rgba(255,205,231,.25) 0%, rgba(255,170,210,.12) 50%, rgba(255,205,231,.05) 100%);
+    }
+
+    @media (prefers-color-scheme: light){
+      :root{
+        --bg: #fcfcfe;
+        --panel: rgba(0,0,0,0.06);
+        --panel-strong: rgba(0,0,0,0.09);
+        --text: #0b0c10;
+        --muted: #3d4451;
+        --link: #b30066;
+        --shadow: 0 12px 30px rgba(0,0,0,.10), 0 1px 0 rgba(0,0,0,.03) inset;
+        --grad-1: linear-gradient(135deg, rgba(255,205,231,.6) 0%, rgba(255,170,210,.18) 50%, rgba(255,205,231,.06) 100%);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0; font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; color: var(--text); background: radial-gradient(60vw 60vw at 10% -10%, rgba(255,180,210,.12), transparent 60%),
+       radial-gradient(40vw 40vw at 90% 0%, rgba(255,170,215,.08), transparent 60%),
+       var(--bg);
+      background-attachment: fixed;
+      line-height: 1.6;
+    }
+    a{ color: var(--link); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    /* LAYOUT */
+    .wrap{ width: min(100% - 2rem, var(--grid)); margin-inline: auto; }
+    header{
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(1.3) blur(var(--blur));
+      background: color-mix(in srgb, var(--bg) 75%, transparent);
+      border-bottom: 1px solid var(--panel-strong);
+    }
+    .nav{ display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 0; }
+    .brand{ display: flex; align-items: center; gap: .7rem; font-weight: 800; letter-spacing: .2px; }
+    .brand .dot{ width: 12px; height: 12px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 0 6px rgba(255,190,220,.18), 0 0 30px rgba(255, 120, 180, .25); }
+    .nav ul{ list-style: none; display: flex; gap: 1rem; margin: 0; padding: 0; }
+    .nav a{ padding: .5rem .8rem; border-radius: 999px; border: 1px solid transparent; }
+    .nav a:hover{ border-color: var(--panel-strong); background: color-mix(in srgb, var(--accent) 12%, transparent); text-decoration: none; }
+
+    .btn{ display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1.05rem; border-radius: 999px; border: 1px solid var(--panel-strong); background: var(--grad-1); box-shadow: var(--shadow); color: var(--text); font-weight: 700; }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 18px 40px rgba(0,0,0,.28); text-decoration: none; }
+
+    .hero{ padding: clamp(3rem, 6vw, 6rem) 0 2rem; position: relative; }
+    .hero h1{ font-size: clamp(1.9rem, 4.5vw, 3.4rem); line-height: 1.12; margin: 0 0 .8rem; }
+    .hero p.lead{ font-size: clamp(1.05rem, 2.1vw, 1.25rem); color: var(--muted); max-width: 65ch; }
+
+    .grid{ display: grid; gap: 1rem; }
+    .cards{ grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin: 2rem 0; }
+    .card{ background: var(--panel); border: 1px solid var(--panel-strong); border-radius: var(--radius); padding: 1.1rem; box-shadow: var(--shadow); position: relative; overflow: clip; }
+    .card h3{ margin: 0 0 .4rem; font-size: 1.05rem; }
+    .card p{ margin: 0; color: var(--muted); }
+
+    .tag{ display: inline-flex; align-items: center; gap: .4rem; padding: .28rem .6rem; border: 1px solid var(--panel-strong); border-radius: 999px; font-size: .82rem; background: color-mix(in srgb, var(--accent) 12%, transparent); }
+
+    .section{ padding: clamp(2rem, 5vw, 3rem) 0; }
+    .section h2{ font-size: clamp(1.5rem, 3vw, 2rem); margin: 0 0 .6rem; }
+    .section .sub{ color: var(--muted); margin: 0 0 1rem; }
+
+    .pill{ display: inline-block; padding: .25rem .6rem; border-radius: 999px; border: 1px solid var(--panel-strong); background: color-mix(in srgb, var(--accent) 14%, transparent); font-weight: 700; letter-spacing: .2px; }
+
+    .two-col{ display: grid; grid-template-columns: 1.1fr 1fr; gap: 1rem; }
+    @media (max-width: 900px){ .two-col{ grid-template-columns: 1fr; } }
+
+    .list-good li{ border-left: 3px solid var(--accent-strong); padding-left: .7rem; margin: .45rem 0; }
+    .list-warn li{ border-left: 3px solid var(--bad); padding-left: .7rem; margin: .45rem 0; }
+
+    details{ border: 1px solid var(--panel-strong); border-radius: var(--radius); padding: .9rem 1rem; background: color-mix(in srgb, var(--accent) 8%, transparent); box-shadow: var(--shadow); }
+    details + details{ margin-top: .6rem; }
+    details summary{ font-weight: 700; cursor: pointer; }
+
+    .source{ font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .86rem; background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px dashed var(--panel-strong); border-radius: 10px; padding: .5rem .6rem; }
+
+    footer{ border-top: 1px solid var(--panel-strong); padding: 2rem 0 4rem; color: var(--muted); }
+
+    .kbd{ font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .85rem; border: 1px solid var(--panel-strong); padding: .15rem .35rem; border-radius: 6px; background: color-mix(in srgb, var(--accent) 8%, transparent); }
+
+    .toast{ position: fixed; right: 1rem; bottom: 1rem; z-index: 60; display: none; max-width: 420px; background: var(--panel); border: 1px solid var(--panel-strong); border-radius: var(--radius); box-shadow: var(--shadow); padding: .9rem 1rem; }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand"><span class="dot"></span><span>AfD — Risiken & Problematiken</span></div>
+      <nav>
+        <ul>
+          <li><a href="#start">Start</a></li>
+          <li><a href="#quick">Kurz & knapp</a></li>
+          <li><a href="#themen">Themen</a></li>
+          <li><a href="#quellen">Quellen</a></li>
+        </ul>
+      </nav>
+      <button class="btn" id="themeBtn" aria-label="Darstellung wechseln (Hell/Dunkel)">🌗 Theme</button>
+    </div>
+  </header>
+
+  <main id="start" class="wrap hero">
+    <span class="pill">Pastell‑Pink • Modern • Quellenbasiert</span>
+    <h1>Worum geht’s hier?</h1>
+    <p class="lead">Diese Seite zeigt <strong>kompakt und verständlich</strong>, warum die AfD aus Sicht von Demokratie, Europa‑Politik, Klima & Wissenschaft sowie Grundrechten <strong>problematische Positionen</strong> vertritt. Alles ist <strong>quellenbasiert</strong> und für schnelle Orientierung aufbereitet.</p>
+    <div class="grid cards">
+      <article class="card" aria-label="Demokratie & Verfassungsschutz">
+        <h3>Demokratie & Verfassungsschutz</h3>
+        <p>Gerichte bestätigten die <em>Einstufung der AfD als rechtsextremistischer Verdachtsfall</em>; die <em>Junge Alternative</em> gilt als <em>gesichert extremistisch</em>. <a href="#quellen">Quellen</a></p>
+      </article>
+      <article class="card" aria-label="Europa & international">
+        <h3>Europa & Internationales</h3>
+        <p>Forderungen wie <em>Austritt aus dem Euro‑System</em> und die <em>Entmachtung der EU</em> würden wirtschaftliche und geopolitische Risiken steigern.</p>
+      </article>
+      <article class="card" aria-label="Klima & Energie">
+        <h3>Klima & Energie</h3>
+        <p>Die AfD will <em>alle CO₂‑Abgaben abschaffen</em> und setzt auf fossile Grundlast statt Energiewende – mit hohen Folgekosten. <a href="#quellen">Quellen</a></p>
+      </article>
+      <article class="card" aria-label="Grundrechte & Zusammenhalt">
+        <h3>Grundrechte & Zusammenhalt</h3>
+        <p>Programmatische Akzente bedrohen <em>Minderheitenrechte</em> und <em>gesellschaftlichen Zusammenhalt</em> (z. B. migrations‑ und kulturpolitische Leitbilder).</p>
+      </article>
+    </div>
+    <a class="btn" href="#themen">Weiter zu den Themen →</a>
+  </main>
+
+  <section id="quick" class="section wrap">
+    <h2>Die wichtigsten Punkte in <span class="tag">30 Sekunden</span></h2>
+    <p class="sub">Kurzübersicht: Was macht die AfD aus demokratietheoretischer, ökonomischer und ökologischer Sicht riskant?</p>
+    <div class="grid cards">
+      <div class="card">
+        <h3>🔎 Extremismus‑Einstufungen</h3>
+        <ul class="list-warn">
+          <li>Gerichte ließen die <strong>Einstufung der AfD als Verdachtsfall</strong> rechtskräftig werden.</li>
+          <li><strong>Junge Alternative</strong>: von Gerichten als <strong>gesichert extremistisch</strong> bestätigt.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>💶 Euro & EU</h3>
+        <ul class="list-warn">
+          <li><strong>Austritt aus dem Euro‑System</strong> und <strong>Beschneidung von EU‑Kompetenzen</strong> → Risiko für Wohlstand & Stabilität.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🌍 Klima & Energie</h3>
+        <ul class="list-warn">
+          <li><strong>Abschaffung aller CO₂‑Abgaben</strong>, Rückabwicklung der Klimapolitik → steigende Langfristkosten.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚖️ Rechtsstaat & Grundrechte</h3>
+        <ul class="list-warn">
+          <li>Leitbilder zu Kultur, Migration und Medien gefährden <strong>Gleichbehandlung</strong> und <strong>pluralistische Vielfalt</strong>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="themen" class="section wrap">
+    <h2>Vertiefung nach Themen</h2>
+    <p class="sub">Aufklappen für Details. Jede Behauptung ist auf <a href="#quellen">Quellen</a> rückführbar.</p>
+
+    <details open>
+      <summary>1) Demokratie & Verfassungsschutz</summary>
+      <p>Die Einstufung der AfD als <em>rechtsextremistischer Verdachtsfall</em> ist nach Entscheidungen oberer Gerichte rechtskräftig. Die Jugendorganisation <em>Junge Alternative</em> wurde als <em>gesichert extremistische Bestrebung</em> bewertet. Das erlaubt dem Verfassungsschutz erweiterte Beobachtungsmaßnahmen. → <a href="#quellen">Quellen</a></p>
+      <ul class="list-warn">
+        <li>Gefahr der <strong>Normalisierung extrem rechter Ideologeme</strong> im parlamentarischen Raum.</li>
+        <li><strong>Unterminierung demokratischer Institutionen</strong> durch delegitimierende Rhetorik.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>2) Europa, Währung & Außen</summary>
+      <p>Das Programm fordert u. a. den <strong>Austritt Deutschlands aus dem Euro‑System</strong> sowie die deutliche Beschneidung von EU‑Kompetenzen (Europa der „Vaterländer“). Das erhöht Wechselkurs‑, Handels‑ und Bankenrisiken und schwächt europäische Handlungsfähigkeit. → <a href="#quellen">Quellen</a></p>
+      <ul class="list-warn">
+        <li>Gefahr von <strong>Finanz‑ und Bankenstress</strong> bei Euro‑Austrittsszenarien.</li>
+        <li><strong>Geopolitische Fragmentierung</strong> und geringere Verhandlungsmacht Europas.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>3) Klima, Energie & Wissenschaft</summary>
+      <p>Die AfD will <strong>alle CO₂‑Abgaben abschaffen</strong>, die Energiewende stoppen und stärker auf fossile und nukleare Grundlast setzen. Zudem liegen Gesetzesinitiativen vor, die die <strong>Klimaneutralität 2045</strong> rückgängig machen sollen. → <a href="#quellen">Quellen</a></p>
+      <ul class="list-warn">
+        <li>Langfristig <strong>höhere volkswirtschaftliche Schäden</strong> durch Klimafolgen.</li>
+        <li><strong>Standortrisiken</strong> (Investitions‑ und Innovationsabfluss) durch Abkehr von Zukunftstechnologien.</li>
+      </ul>
+    </details>
+
+    <details>
+      <summary>4) Grundrechte, Kultur & Medien</summary>
+      <p>Programmatische Passagen zu Kultur, Migration und Medien setzen <strong>exklusive Identitätsleitbilder</strong> und fordern u. a. Einschränkungen, die <strong>Pluralismus und Minderheitenschutz</strong> entgegenwirken können. → <a href="#quellen">Quellen</a></p>
+      <ul class="list-warn">
+        <li>Risiko von <strong>Diskriminierung</strong> und <strong>gesellschaftlicher Spaltung</strong>.</li>
+        <li>Gefahr politischer <strong>Instrumentalisierung von Kultur‑ und Medienpolitik</strong>.</li>
+      </ul>
+    </details>
+  </section>
+
+  <section id="quellen" class="section wrap">
+    <h2>Quellen & weiterführende Links</h2>
+    <p class="sub">Kuratiert, aktuell (Stand 2025) und so neutral wie möglich ausgewählt.</p>
+    <div class="grid" style="grid-template-columns: 1fr; gap: .8rem;">
+      <div class="source">📄 Bundesverwaltungsgericht: <a href="https://www.bverwg.de/pm/2025/54" target="_blank" rel="noopener">Keine Zulassung der Revision – AfD bleibt rechtsextremistischer Verdachtsfall (2025)</a></div>
+      <div class="source">📄 Bundesamt für Verfassungsschutz: <a href="https://www.verfassungsschutz.de/SharedDocs/pressemitteilungen/DE/2024/pressemitteilung-2024-1-afd.html" target="_blank" rel="noopener">OVG NRW bestätigt Einstufungen – u. a. „Flügel“ (2024)</a></div>
+      <div class="source">📄 VG Köln: <a href="https://www.vg-koeln.nrw.de/behoerde/presse/Pressemitteilungen/Archiv/2024/03_06022024/index.php" target="_blank" rel="noopener">JA darf als gesichert extremistisch eingestuft werden (2024)</a></div>
+      <div class="source">📘 AfD‑Bundestagswahlprogramm 2025 (PDF): <a href="https://www.afd.de/wp-content/uploads/2025/02/AfD_Bundestagswahlprogramm2025_web.pdf" target="_blank" rel="noopener">„Zeit für Deutschland“</a> — z. B. <em>Abschaffung aller CO₂‑Abgaben</em>, <em>Deutschland muss aus dem Euro‑System austreten</em>, <em>WHO – Reform oder Austritt</em>.</div>
+      <div class="source">🏛️ Deutscher Bundestag: <a href="https://www.bundestag.de/dokumente/textarchiv/2025/kw26-de-klimaschutzfolgenbereinigung-1084784" target="_blank" rel="noopener">AfD‑Gesetzentwürfe zur Rückabwicklung der Klimapolitik (2025)</a></div>
+      <div class="source">🧭 Überblick (neutral): <a href="https://www.deutschlandfunk.de/bundestagswahl-2025-wahlprogramme-klimaschutz-100.html" target="_blank" rel="noopener">DLF‑Dossier zu Klima/Energie in Wahlprogrammen (2025)</a></div>
+    </div>
+    <p style="margin-top:1rem">Hinweis: Für Kontext zu Europa‑Positionen siehe u. a. <em>Programm 2025</em> (Kapitel EU/Euro) und Berichterstattung zur Europawahl 2024.</p>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p><strong>Build‑Info:</strong> Ein‑Seiten‑Website, HTML + CSS + JS, Akzentfarbe Pastell‑Pink. Voll responsive, mit Fokus auf Lesbarkeit und schnelle Orientierung. Du kannst die Farbe ändern, indem du in <span class="kbd">:root --accent</span> einen neuen Wert setzt.</p>
+      <p>© 2025 • Inhalt unter CC‑BY‑SA; Quellen siehe oben. Mit ❤️ und Verantwortung gestaltet.</p>
+    </div>
+  </footer>
+
+  <div role="status" aria-live="polite" class="toast" id="toast"></div>
+
+  <script>
+    // Smooth scroll for same-page links
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', e=>{
+        const id = a.getAttribute('href');
+        if(id.length>1){ e.preventDefault(); document.querySelector(id)?.scrollIntoView({behavior:'smooth', block:'start'}); }
+      });
+    });
+
+    // Theme toggle (persist in localStorage)
+    const btn = document.getElementById('themeBtn');
+    const toast = document.getElementById('toast');
+    const applyTheme = (mode)=>{
+      document.documentElement.dataset.theme = mode;
+      if(mode==='light'){
+        document.documentElement.style.colorScheme = 'light';
+        document.body.style.background = 'radial-gradient(60vw 60vw at 10% -10%, rgba(255,180,210,.35), transparent 60%),'+
+        'radial-gradient(40vw 40vw at 90% 0%, rgba(255,170,215,.25), transparent 60%), var(--bg)';
+      }else{
+        document.documentElement.style.colorScheme = 'dark';
+        document.body.style.background = 'radial-gradient(60vw 60vw at 10% -10%, rgba(255,180,210,.12), transparent 60%),'+
+        'radial-gradient(40vw 40vw at 90% 0%, rgba(255,170,215,.08), transparent 60%), var(--bg)';
+      }
+    }
+    const saved = localStorage.getItem('theme');
+    if(saved) applyTheme(saved);
+    btn.addEventListener('click', ()=>{
+      const mode = (document.documentElement.dataset.theme|| (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'))==='light'?'dark':'light';
+      localStorage.setItem('theme', mode); applyTheme(mode);
+      toast.textContent = 'Theme: '+ (mode==='light'?'Hell':'Dunkel'); toast.style.display='block';
+      setTimeout(()=> toast.style.display='none', 1600);
+    });
+
+    // Reveal on scroll
+    const reveal = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){ entry.target.animate([
+          {opacity:0, transform:'translateY(12px)'},
+          {opacity:1, transform:'translateY(0)'}
+        ], {duration: 450, easing:'cubic-bezier(.2,.8,.2,1)'}); reveal.unobserve(entry.target); }
+      })
+    }, {threshold:.12});
+    document.querySelectorAll('.card, details, .section h2').forEach(el=> reveal.observe(el));
+  </script>
+</body>
+</html>
